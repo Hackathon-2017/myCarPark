@@ -42,6 +42,7 @@ function ($scope, $stateParams, $http, $cordovaSms) {
     
         }); 
   };
+    
   var maxCount=[0,0,0];
     
   $scope.cancelSlot=function(event) {
@@ -87,7 +88,7 @@ function ($scope, $stateParams, $http, $cordovaSms) {
         })   
 			//location.reload();
 			$scope.viewSlot();
-            $scope.parking();
+            //$scope.parking();
                 }
                
              }
@@ -100,7 +101,8 @@ $scope.bookSlot = function(a) {
     var user_id=JSON.parse(window.localStorage.getItem(id))[0];
 		var slot=document.getElementById(a);
        var phone=JSON.parse(window.localStorage.getItem(id))[1];
-		//console.log(slot.style.backgroundColor);		
+		//console.log(slot.style.backgroundColor);
+    
 		slot.style.backgroundColor = slot.style.backgroundColor == 'red' ? alert("Try other available slot") : confirmSlot();
 		function confirmSlot() {
             
@@ -112,6 +114,7 @@ $scope.bookSlot = function(a) {
                 diff_slot=1;
             else
                 diff_slot=2;
+            
             //initializing counts
             $http.get('https://api.mlab.com/api/1/databases/carpark/collections/slot?apiKey=uB6GZgs0JHGxvojb6G9wHunoxCue0JOT').success(function (data) {
         var user_id=JSON.parse(window.localStorage.getItem(id))[0];
@@ -126,10 +129,10 @@ $scope.bookSlot = function(a) {
          // console.log(maxCount[i])  
         } 
             });
-            
            
         if(maxCount[diff_slot]==0)
            {
+             
         $http({
           method: 'PUT' ,
           url: 'https://api.mlab.com/api/1/databases/carpark/collections/slot/'+$scope.choice+'	?apiKey=uB6GZgs0JHGxvojb6G9wHunoxCue0JOT',
@@ -138,7 +141,7 @@ $scope.bookSlot = function(a) {
             contentType: "application/json"
         }).success(function (data) {
             //console.log(data.a)
-          
+          console.log(maxCount[diff_slot]);
                 slot.style.backgroundColor="yellow";
                 maxCount[diff_slot]++;
 			     alert("Slot "+a+" booking is confirmed");
@@ -157,7 +160,7 @@ $scope.bookSlot = function(a) {
           });
             
              $scope.viewSlot();
-            $scope.parking();
+            //$scope.parking();
         })
         }
        
