@@ -1,5 +1,5 @@
 var id;
-angular.module('app.controllers', [])
+angular.module('app.controllers', ['ngCordova'])
 
 .controller('myCarParkCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
@@ -13,12 +13,13 @@ function ($scope, $stateParams) {
 
 
    
-.controller('reserveBookingCtrl', ['$scope', '$stateParams','$http', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('reserveBookingCtrl', ['$scope', '$stateParams','$http','$cordovaSms', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 
-function ($scope, $stateParams, $http) {
+function ($scope, $stateParams, $http, $cordovaSms) {
 
  $scope.viewSlot=function(event) {
-     var user_id=window.localStorage.getItem(id);
+    var user_id=JSON.parse(window.localStorage.getItem(id))[0];
+     
       //var time_value=document.getElementById("slot_value").value;	  
 		//console.log($scope.choice);
     $http.get('https://api.mlab.com/api/1/databases/carpark/collections/slot/'+$scope.choice+'?apiKey=uB6GZgs0JHGxvojb6G9wHunoxCue0JOT').success(function (data) {
@@ -43,7 +44,8 @@ function ($scope, $stateParams, $http) {
   };
   var maxCount=[0,0,0]; 
   $scope.cancelSlot=function(event) {
-     var user_id=window.localStorage.getItem(id);
+     var user_id=JSON.parse(window.localStorage.getItem(id))[0];
+      var phone=JSON.parse(window.localStorage.getItem(id))[1];
     $http.get('https://api.mlab.com/api/1/databases/carpark/collections/slot/'+$scope.choice+'?apiKey=uB6GZgs0JHGxvojb6G9wHunoxCue0JOT').success(function (data) {
           var floorSlots=["A0","A1","A2","A3","A4","A5","A6","A7"];var i;
         var A=new Array(data.A0,data.A1,data.A2,data.A3,data.A4,data.A5,data.A6,data.A7);
@@ -69,11 +71,23 @@ function ($scope, $stateParams, $http) {
             maxCount[diff_slot]=0;
 			slot.style.backgroundColor="green";
 			alert("Your booking is cancelled");
+             //sms
+            document.addEventListener("deviceready", function () {
+
+        $cordovaSms
+          .send(phone, "Your UserID: "+user_id+". Your booking is cancelled")
+          .then(function() {
+            // Success! SMS was sent
+          }, function(error) {
+            // An error occurred
+          });
+
+      });
+        })   
 			//location.reload();
 			$scope.viewSlot();
-        })
-                    
-                    }
+            $scope.parking();
+                }
                
              }
     
@@ -82,9 +96,9 @@ function ($scope, $stateParams, $http) {
 
  
 $scope.bookSlot = function(a) {
-    var user_id=window.localStorage.getItem(id);
+    var user_id=JSON.parse(window.localStorage.getItem(id))[0];
 		var slot=document.getElementById(a);
-       
+       var phone=JSON.parse(window.localStorage.getItem(id))[1];
 		//console.log(slot.style.backgroundColor);		
 		slot.style.backgroundColor = slot.style.backgroundColor == 'red' ? alert("Try other available slot") : confirmSlot();
 		function confirmSlot() {
@@ -118,14 +132,26 @@ $scope.bookSlot = function(a) {
             contentType: "application/json"
         }).success(function (data) {
             //console.log(data.a)
-            
+          
                 slot.style.backgroundColor="yellow";
                 maxCount[diff_slot]++;
 			     alert("Slot "+a+" booking is confirmed");
 			    //location.reload();
-			     $scope.viewSlot();
-    
+			 //sms   
+            document.addEventListener("deviceready", function () {
+
+            $cordovaSms
+              .send(phone, "Your UserID: "+user_id+". Slot "+a+" booking is confirmed.")
+              .then(function() {
+                // Success! SMS was sent
+              }, function(error) {
+                // An error occurred
+              });
+
+          });
             
+             $scope.viewSlot();
+            $scope.parking();
         })
         }
        
@@ -227,8 +253,11 @@ function ($scope, $stateParams, $http, $q) {
 			}else if(name==data[0].username&&pw==data[0].password){
 			   // var id;
 				//console.log(data[0].id);
-				window.localStorage.setItem( id, data[0].id );
+				var idphone=[data[0].id,data[0].mobile];
+				window.localStorage.setItem( id, JSON.stringify(idphone));
+                console.log(JSON.parse(window.localStorage.getItem(id)));
 				window.localStorage.getItem(id);
+                
 			  $state.go('menu.reserveBooking')
 			}
 			else{
@@ -258,7 +287,7 @@ function ($scope, $stateParams, $http) {
       // console.log("hie");
        
       $http.get('https://api.mlab.com/api/1/databases/carpark/collections/slot?apiKey=uB6GZgs0JHGxvojb6G9wHunoxCue0JOT').success(function (data) {
-        var user_id=window.localStorage.getItem(id);
+        var user_id=JSON.parse(window.localStorage.getItem(id))[0];
         var qr=""+user_id+" ";
           //console.log(data);
        // var A=new Array(data.A0,data.A1,data.A2,data.A3,data.A4,data.A5,data.A6,data.A7);
@@ -280,7 +309,9 @@ document.getElementById('myImage').src = mySrc;
      // console.log(qr); 
                                   });
 
-                                  }                               
+                                  }
+   
 
 
 }])
+$scope.parking();
