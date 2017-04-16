@@ -98,8 +98,8 @@ $scope.bookSlot = function(a) {
             else
                 diff_slot=2;
             
-            if(maxCount[diff_slot]==0)
-        $http.get('https://api.mlab.com/api/1/databases/carpark/collections/slot/'+$scope.choice+'?apiKey=uB6GZgs0JHGxvojb6G9wHunoxCue0JOT').success(function (data){
+            if(maxCount[diff_slot]==0){
+                  $http.get('https://api.mlab.com/api/1/databases/carpark/collections/slot/'+$scope.choice+'?apiKey=uB6GZgs0JHGxvojb6G9wHunoxCue0JOT').success(function (data){
             var floorSlots=["A0","A1","A2","A3","A4","A5","A6","A7"];var i;
         var A=new Array(data.A0,data.A1,data.A2,data.A3,data.A4,data.A5,data.A6,data.A7);
              for(i=0;i<8;i++){
@@ -128,7 +128,9 @@ $scope.bookSlot = function(a) {
             
         })
         }
-        else alert("Booking Limit Reached");	
+       
+            }
+ else alert("Booking Limit Reached");      	
 		};
     };
 
@@ -248,10 +250,37 @@ function ($scope, $stateParams) {
 
 }])
 
-.controller('parkingTicketCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
+.controller('parkingTicketCtrl', ['$scope', '$stateParams','$http', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+function ($scope, $stateParams, $http) {
+   $scope.parking=function(){
+      // console.log("hie");
+       
+      $http.get('https://api.mlab.com/api/1/databases/carpark/collections/slot?apiKey=uB6GZgs0JHGxvojb6G9wHunoxCue0JOT').success(function (data) {
+        var user_id=window.localStorage.getItem(id);
+        var qr=""+user_id+" ";
+          //console.log(data);
+       // var A=new Array(data.A0,data.A1,data.A2,data.A3,data.A4,data.A5,data.A6,data.A7);
+        var A=[0,1,2,3,4,5,6,7];
+        for(var i=0;i<data.length;i++)
+        { 
+            var A=new Array(data[i].A0,data[i].A1,data[i].A2,data[i].A3,data[i].A4,data[i].A5,data[i].A6,data[i].A7);
+          for(var j=0;j<8;j++){
+              if(A[j]==user_id){
+                  qr+="Slot"+i+" ";
+                  qr+="A"+j+" ";
+              }
+          }
+            
+         }
+          qr+=" booking confirmed";
+var mySrc = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data='+qr;
+document.getElementById('myImage').src = mySrc;
+     // console.log(qr); 
+                                  });
+
+                                  }                               
 
 
 }])
