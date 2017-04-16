@@ -57,6 +57,16 @@ angular.module('app.routes', [])
       }
     }
   })
+  
+    .state('menu.parkingTicket', {
+    url: '/page7',
+    views: {
+      'side-menu21': {
+        templateUrl: 'templates/parkingTicket.html',
+        controller: 'parkingTicketCtrl'
+      }
+    }
+  })
 
 $urlRouterProvider.otherwise('/page4')
 
