@@ -8,8 +8,8 @@
 		</div>		
 	</div>
 	
-	<div class="row">
-		<div class="col-md-12 col-sm-12 col-xs-12">
+	<div class="row zeropadding">
+		<div class="col-md-12 col-sm-12 col-xs-12 zeropadding">
 			<label class = "item item-input item-select" style="background-color:#f2f2f2">
 			   <div class = "input-label">
 				  Time
@@ -26,12 +26,12 @@
 	</div>
 
 	<div class="spacer" style="height: 10px;"></div>
-	<div class="row">
-			<div class="col-md-offset-0 col-md-12 col-sm-offset-0 col-sm-12 col-xs-offset-0 col-xs-12">
+	<div class="row zeropadding">
+			<div class="col-md-offset-0 col-md-12 col-sm-offset-0 col-sm-12 col-xs-offset-0 col-xs-12 zeropadding">
 				<table class="table-bordered textcenter" style="background-color:#f2f2f2">
 					<tr>
-						<td><b>Available Slot</b></td>
-						<td><b>Booked Slot<b></td>
+						<td><b>Available Slots</b></td>
+						<td><b>Booked Slots<b></td>
 					</tr>
 					<tr>
 						<td>{{x}}</td>
@@ -46,32 +46,48 @@
 		<div class="spacer" style="height: 20px;"></div>
 		<div class="row slotRow borderEdge">
 			<div class="col-md-3 col-sm-3 col-xs-3">
-				<label id="A0" class="borderEdge textcenter slot" style="background-color: green;" ng-click="bookSlot('A0')">A0</label>
+				<label id="A0" class="borderEdge textcenter slot" style="background-color: green;" ng-click="bookSlot('A0')">A0
+				<label class="borderEdge textcenter typeCar">Sedan</label>
+				</label>				
 			</div>
 			<div class="col-md-3 col-sm-3 col-xs-3">
-				<label id="A1" class="borderEdge textcenter slot" style="background-color: green;" ng-click="bookSlot('A1')">A1</label>
+				<label id="A1" class="borderEdge textcenter slot" style="background-color: green;" ng-click="bookSlot('A1')">A1
+				<label class="borderEdge textcenter typeCar">Sedan</label>
+				</label>
 			</div>
 			<div class="col-md-3 col-sm-3 col-xs-3">
-				<label id="A2" class="borderEdge textcenter slot" style="background-color: green;" ng-click="bookSlot('A2')">A2</label>
+				<label id="A2" class="borderEdge textcenter slot" style="background-color: green;" ng-click="bookSlot('A2')">A2
+				<label class="borderEdge textcenter typeCar">Compact</label>
+				</label>
 			</div>
 			<div class="col-md-3 col-sm-3 col-xs-3">
-				<label id="A3" class="borderEdge textcenter slot" style="background-color: green;" ng-click="bookSlot('A3')">A3</label>
+				<label id="A3" class="borderEdge textcenter slot" style="background-color: green;" ng-click="bookSlot('A3')">A3
+				<label class="borderEdge textcenter typeCar">Compact</label>
+				</label>
 			</div>
 		</div>
 		<div class="spacer" style="height: 30px;border-bottom: thick dotted #FFD700;"></div>
 		<div class="spacer" style="height: 30px;"></div>
 		<div class="row slotRow borderEdge">
 			<div class="col-md-3 col-sm-3 col-xs-3">
-				<label id="A4" class="borderEdge textcenter slot" style="background-color: green;" ng-click="bookSlot('A4')">A4</label>
+				<label id="A4" class="borderEdge textcenter slot" style="background-color: green;" ng-click="bookSlot('A4')">A4
+				<label class="borderEdge textcenter typeCar">Sedan</label>
+				</label>
 			</div>
 			<div class="col-md-3 col-sm-3 col-xs-3">
-				<label id="A5" class="borderEdge textcenter slot" style="background-color: green;" ng-click="bookSlot('A5')">A5</label>
+				<label id="A5" class="borderEdge textcenter slot" style="background-color: green;" ng-click="bookSlot('A5')">A5
+				<label class="borderEdge textcenter typeCar">Sedan</label>
+				</label>
 			</div>
 			<div class="col-md-3 col-sm-3 col-xs-3">
-				<label id="A6" class="borderEdge textcenter slot" style="background-color: green;" ng-click="bookSlot('A6')">A6</label>
+				<label id="A6" class="borderEdge textcenter slot" style="background-color: green;" ng-click="bookSlot('A6')">A6
+				<label class="borderEdge textcenter typeCar">Sedan</label>
+				</label>
 			</div>
 			<div class="col-md-3 col-sm-3 col-xs-3">
-				<label id="A7" class="borderEdge textcenter slot" style="background-color: green;" ng-click="bookSlot('A7')">A7</label>
+				<label id="A7" class="borderEdge textcenter slot" style="background-color: green;" ng-click="bookSlot('A7')">A7
+				<label class="borderEdge textcenter typeCar">Compact</label>
+				</label>
 			</div>
 		</div>
 		<div class="spacer" style="height: 20px;"></div>
