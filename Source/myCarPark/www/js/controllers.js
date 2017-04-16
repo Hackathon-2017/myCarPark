@@ -90,7 +90,7 @@ $scope.bookSlot = function(a) {
 		function confirmSlot() {
             
             //find different slot limits 
-            var diff_slot;
+            var diff_slot,temp_count=0;
             if($scope.choice=='58f27fcc734d1d3b89ba801e')
                 diff_slot=0;
             else if($scope.choice=='58f281aa734d1d3b89ba805d')
@@ -99,6 +99,17 @@ $scope.bookSlot = function(a) {
                 diff_slot=2;
             
             if(maxCount[diff_slot]==0)
+        $http.get('https://api.mlab.com/api/1/databases/carpark/collections/slot/'+$scope.choice+'?apiKey=uB6GZgs0JHGxvojb6G9wHunoxCue0JOT').success(function (data){
+            var floorSlots=["A0","A1","A2","A3","A4","A5","A6","A7"];var i;
+        var A=new Array(data.A0,data.A1,data.A2,data.A3,data.A4,data.A5,data.A6,data.A7);
+             for(i=0;i<8;i++){
+                 if(A[i]==user_id)
+                     temp_count++;
+                     
+             }
+        })
+        if(temp_count==0)
+           {
         $http({
           method: 'PUT' ,
           url: 'https://api.mlab.com/api/1/databases/carpark/collections/slot/'+$scope.choice+'	?apiKey=uB6GZgs0JHGxvojb6G9wHunoxCue0JOT',
@@ -116,6 +127,7 @@ $scope.bookSlot = function(a) {
     
             
         })
+        }
         else alert("Booking Limit Reached");	
 		};
     };
