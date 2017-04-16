@@ -41,7 +41,7 @@ function ($scope, $stateParams, $http) {
     
         }); 
   };
-  
+  var maxCount=0; 
   $scope.cancelSlot=function(event) {
      var user_id=window.localStorage.getItem(id);
     $http.get('https://api.mlab.com/api/1/databases/carpark/collections/slot/'+$scope.choice+'?apiKey=uB6GZgs0JHGxvojb6G9wHunoxCue0JOT').success(function (data) {
@@ -57,6 +57,7 @@ function ($scope, $stateParams, $http) {
                      data: "{$set : {"+floorSlots[i]+" : 0}}" ,
                      contentType: "application/json"
         }).success(function (data) {
+            maxCount=0;
 			slot.style.backgroundColor="green";
 			alert("Your booking is cancelled");
 			//location.reload();
@@ -70,7 +71,7 @@ function ($scope, $stateParams, $http) {
         }); 
   };
 
-    
+ 
 $scope.bookSlot = function(a) {
     var user_id=window.localStorage.getItem(id);
 		var slot=document.getElementById(a);
@@ -78,22 +79,25 @@ $scope.bookSlot = function(a) {
 		//console.log(slot.style.backgroundColor);		
 		slot.style.backgroundColor = slot.style.backgroundColor == 'red' ? alert("Try other available slot") : confirmSlot();
 		function confirmSlot() {
+            if(maxCount==0)
         $http({
           method: 'PUT' ,
           url: 'https://api.mlab.com/api/1/databases/carpark/collections/slot/'+$scope.choice+'	?apiKey=uB6GZgs0JHGxvojb6G9wHunoxCue0JOT',
           //data: JSON.stringify( { "$set" : {"A0" : 1 } } ),
-            data: "{$set : {"+a+" : "+user_id+"}}" ,
-        
-          contentType: "application/json"
+            data: "{$set : {"+a+" : "+user_id+"}}" ,        
+            contentType: "application/json"
         }).success(function (data) {
             //console.log(data.a)
-        slot.style.backgroundColor="yellow";
-			alert("Slot "+a+" booking is confirmed");
-			//location.reload();
-			$scope.viewSlot();
+            
+                slot.style.backgroundColor="yellow";
+                maxCount++;
+			     alert("Slot "+a+" booking is confirmed");
+			    //location.reload();
+			     $scope.viewSlot();
+    
+            
         })
-        
-			
+        else alert("Booking Limit Reached");	
 		};
     };
 
