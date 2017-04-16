@@ -42,7 +42,8 @@ function ($scope, $stateParams, $http, $cordovaSms) {
     
         }); 
   };
-  var maxCount=[0,0,0]; 
+  var maxCount=[0,0,0];
+    
   $scope.cancelSlot=function(event) {
      var user_id=JSON.parse(window.localStorage.getItem(id))[0];
       var phone=JSON.parse(window.localStorage.getItem(id))[1];
@@ -111,18 +112,23 @@ $scope.bookSlot = function(a) {
                 diff_slot=1;
             else
                 diff_slot=2;
+            //initializing counts
+            $http.get('https://api.mlab.com/api/1/databases/carpark/collections/slot?apiKey=uB6GZgs0JHGxvojb6G9wHunoxCue0JOT').success(function (data) {
+        var user_id=JSON.parse(window.localStorage.getItem(id))[0];
+               for(var i=0;i<data.length;i++)
+        { 
+            var A=new Array(data[i].A0,data[i].A1,data[i].A2,data[i].A3,data[i].A4,data[i].A5,data[i].A6,data[i].A7);
+          for(var j=0;j<8;j++){
+              if(A[j]==user_id){
+                 maxCount[i]=1;
+              }
+          }
+         // console.log(maxCount[i])  
+        } 
+            });
             
-            if(maxCount[diff_slot]==0){
-                  $http.get('https://api.mlab.com/api/1/databases/carpark/collections/slot/'+$scope.choice+'?apiKey=uB6GZgs0JHGxvojb6G9wHunoxCue0JOT').success(function (data){
-            var floorSlots=["A0","A1","A2","A3","A4","A5","A6","A7"];var i;
-        var A=new Array(data.A0,data.A1,data.A2,data.A3,data.A4,data.A5,data.A6,data.A7);
-             for(i=0;i<8;i++){
-                 if(A[i]==user_id)
-                     temp_count++;
-                     
-             }
-        })
-        if(temp_count==0)
+           
+        if(maxCount[diff_slot]==0)
            {
         $http({
           method: 'PUT' ,
@@ -155,7 +161,7 @@ $scope.bookSlot = function(a) {
         })
         }
        
-            }
+            
  else alert("Booking Limit Reached");      	
 		};
     };
@@ -247,7 +253,7 @@ function ($scope, $stateParams, $http, $q) {
         var pw=$scope.pass;
         $http.get('https://api.mongolab.com/api/1/databases/sample/collections/MyDB?q={\"username\":\"'+name+'\",\"password\":\"'+pw+'\"}&apiKey=1ZOH8YSgfpyJnkDHGCoKR1D6M36Ybm_E')
         .success(function (data) {
-			console.log(data);
+			//console.log(data);
 			if(data[0]==null){
 				alert("Wrong Username or Password");
 			}else if(name==data[0].username&&pw==data[0].password){
@@ -255,7 +261,7 @@ function ($scope, $stateParams, $http, $q) {
 				//console.log(data[0].id);
 				var idphone=[data[0].id,data[0].mobile];
 				window.localStorage.setItem( id, JSON.stringify(idphone));
-                console.log(JSON.parse(window.localStorage.getItem(id)));
+               // console.log(JSON.parse(window.localStorage.getItem(id)));
 				window.localStorage.getItem(id);
                 
 			  $state.go('menu.reserveBooking')
@@ -291,7 +297,7 @@ function ($scope, $stateParams, $http) {
         var qr=""+user_id+" ";
           //console.log(data);
        // var A=new Array(data.A0,data.A1,data.A2,data.A3,data.A4,data.A5,data.A6,data.A7);
-        var A=[0,1,2,3,4,5,6,7];
+        //var A=[0,1,2,3,4,5,6,7];
         for(var i=0;i<data.length;i++)
         { 
             var A=new Array(data[i].A0,data[i].A1,data[i].A2,data[i].A3,data[i].A4,data[i].A5,data[i].A6,data[i].A7);
@@ -314,4 +320,3 @@ document.getElementById('myImage').src = mySrc;
 
 
 }])
-$scope.parking();
