@@ -41,7 +41,7 @@ function ($scope, $stateParams, $http) {
     
         }); 
   };
-  var maxCount=0; 
+  var maxCount=[0,0,0]; 
   $scope.cancelSlot=function(event) {
      var user_id=window.localStorage.getItem(id);
     $http.get('https://api.mlab.com/api/1/databases/carpark/collections/slot/'+$scope.choice+'?apiKey=uB6GZgs0JHGxvojb6G9wHunoxCue0JOT').success(function (data) {
@@ -57,7 +57,16 @@ function ($scope, $stateParams, $http) {
                      data: "{$set : {"+floorSlots[i]+" : 0}}" ,
                      contentType: "application/json"
         }).success(function (data) {
-            maxCount=0;
+             //find different slot limits 
+            var diff_slot;
+            if($scope.choice=='58f27fcc734d1d3b89ba801e')
+                diff_slot=0;
+            else if($scope.choice=='58f281aa734d1d3b89ba805d')
+                diff_slot=1;
+            else
+                diff_slot=2;
+            
+            maxCount[diff_slot]=0;
 			slot.style.backgroundColor="green";
 			alert("Your booking is cancelled");
 			//location.reload();
@@ -79,7 +88,17 @@ $scope.bookSlot = function(a) {
 		//console.log(slot.style.backgroundColor);		
 		slot.style.backgroundColor = slot.style.backgroundColor == 'red' ? alert("Try other available slot") : confirmSlot();
 		function confirmSlot() {
-            if(maxCount==0)
+            
+            //find different slot limits 
+            var diff_slot;
+            if($scope.choice=='58f27fcc734d1d3b89ba801e')
+                diff_slot=0;
+            else if($scope.choice=='58f281aa734d1d3b89ba805d')
+                diff_slot=1;
+            else
+                diff_slot=2;
+            
+            if(maxCount[diff_slot]==0)
         $http({
           method: 'PUT' ,
           url: 'https://api.mlab.com/api/1/databases/carpark/collections/slot/'+$scope.choice+'	?apiKey=uB6GZgs0JHGxvojb6G9wHunoxCue0JOT',
@@ -90,7 +109,7 @@ $scope.bookSlot = function(a) {
             //console.log(data.a)
             
                 slot.style.backgroundColor="yellow";
-                maxCount++;
+                maxCount[diff_slot]++;
 			     alert("Slot "+a+" booking is confirmed");
 			    //location.reload();
 			     $scope.viewSlot();
