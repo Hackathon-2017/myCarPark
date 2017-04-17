@@ -128,9 +128,7 @@ $scope.bookSlot = function(a) {
           }
          // console.log(maxCount[i])  
         } 
-            });
-           
-        if(maxCount[diff_slot]==0)
+                  if(maxCount[diff_slot]==0)
            {
              
         $http({
@@ -165,7 +163,9 @@ $scope.bookSlot = function(a) {
         }
        
             
- else alert("Booking Limit Reached");      	
+ else alert("Booking Limit Reached");  
+            });
+               	
 		};
     };
 

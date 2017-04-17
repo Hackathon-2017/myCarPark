@@ -1,4 +1,4 @@
-<ion-view title="Reserve Booking" id="page2" ng-init="choice='58f27fcc734d1d3b89ba801e';viewSlot();">
+<ion-view title="Reserve Booking" id="page2" ng-init="choice='58f27fcc734d1d3b89ba801e';viewSlot();" style="background-color:#FBE9E7;">
   <ion-content padding="true" class="has-header" ng-controller="reserveBookingCtrl" >
   <div class="container">
 	   
@@ -29,14 +29,14 @@
 	<div class="spacer" style="height: 10px;"></div>
 	<div class="row zeropadding">
 			<div class="col-md-offset-0 col-md-12 col-sm-offset-0 col-sm-12 col-xs-offset-0 col-xs-12 zeropadding">
-				<table class="table-bordered textcenter" style="background-color:#f2f2f2">
+				<table class="table-bordered textcenter" style="">
 					<tr>
-						<td><b>Available Slots</b></td>
-						<td><b>Booked Slots<b></td>
+						<td style=" border:2px solid #ff5722;background-color:#fdd835;"><b>Available Slots</b></td>
+						<td style="background-color:#fdd835;"><b>Booked Slots<b></td>
 					</tr>
 					<tr>
-						<td>{{x}}</td>
-						<td>{{8-x}}</td>
+						<td style=" border:2px solid #ff5722;background-color:#ffeb3b;">{{x}}</td>
+						<td style="background-color:#ffeb3b;">{{8-x}}</td>
 					</tr>
 				</table>				
 			</div>			
@@ -96,7 +96,7 @@
 	</div>
 	<div class="spacer" style="height: 20px;"></div>
 	
-	<a class="button button-positive  button-block" ng-click="cancelSlot()">Cancel Booking</a>
+	<a class="button button-assertive  button-block" ng-click="cancelSlot()">Cancel Booking</a>
   </div>
   </ion-content>
 </ion-view>

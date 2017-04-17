@@ -32,3 +32,14 @@
 table{
 	width:100%;
 }
+.bar.bar-stable{
+    background-color: #FF5722;
+    color:white;
+}
+table,tr,td{
+    border:2px solid #ff5722;
+}
+.table-bordered{
+   border:2px solid #ff5722; 
+}
+
