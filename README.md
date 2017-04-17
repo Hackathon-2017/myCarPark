@@ -3,10 +3,10 @@
 Team : SmartCoders
 
 Contributors:
-#Bharath Kumar Natesan Arumugam
-#Barath Naravula Loganathan
-#Sibi Chakravarthy Ramesh
-#Balaji Natarajan
+## Bharath Kumar Natesan Arumugam
+## Barath Naravula Loganathan
+## Sibi Chakravarthy Ramesh
+## Balaji Natarajan
 
 Youtube Link:
 
