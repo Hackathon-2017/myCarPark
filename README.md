@@ -1,5 +1,6 @@
 # UMKC HACKATHON SPRING - 2017
-## Team : SmartCoders
+## Project: Online Parking Reservation System
+## Team: SmartCoders
 ## Contributors:
 * Bharath Kumar Natesan Arumugam
 * Barath Naravula Loganathan
